@@ -10,10 +10,12 @@ import scala.concurrent.Future
 
 object CoinMarketCapAPI extends MarketDataAPI {
 
-  implicit val system: ActorSystem = ActorSystem()
-  implicit val materializer: ActorMaterializer = ActorMaterializer()
 
-  def responseFuture: Future[HttpResponse] =
-    Http().singleRequest(HttpRequest(uri = "http://akka.io"))
+
+  def responseFuture: Future[HttpResponse] = {
+    implicit val system: ActorSystem = ActorSystem()
+    implicit val materializer: ActorMaterializer = ActorMaterializer()
+    Http().singleRequest(HttpRequest(uri = "https://api.coinmarketcap.com/v1/ticker/"))
+  }
 
 }
